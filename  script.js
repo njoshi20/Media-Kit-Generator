@@ -1,33 +1,21 @@
-const form = document.getElementById('mediaKitForm');
-const generatedKit = document.getElementById('generatedKit');
-const companyName = document.getElementById('companyName');
-const companyDescription = document.getElementById('companyDescription');
-const contactName = document.getElementById('contactName');
-const contactEmail = document.getElementById('contactEmail');
+document.getElementById('mediaKitForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form from submitting
 
-// Get the elements where generated data will be displayed
-const generatedCompanyName = document.getElementById('generatedCompanyName');
-const generatedCompanyDescription = document.getElementById('generatedCompanyDescription');
-const generatedContactName = document.getElementById('generatedContactName');
-const generatedContactEmail = document.getElementById('generatedContactEmail');
+    // Get values from form
+    const brandName = document.getElementById('brandName').value;
+    const brandDescription = document.getElementById('brandDescription').value;
+    const brandLogo = document.getElementById('brandLogo').value;
 
-// Listen for form submission
-form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent page refresh on form submit
+    // Log the values to the console (this is just for testing)
+    console.log('Brand Name:', brandName);
+    console.log('Brand Description:', brandDescription);
+    console.log('Brand Logo URL:', brandLogo);
 
-    // Get the values entered by the user
-    const company = companyName.value;
-    const description = companyDescription.value;
-    const contact = contactName.value;
-    const email = contactEmail.value;
-
-    // Update the generated kit with the data
-    generatedCompanyName.textContent = company;
-    generatedCompanyDescription.textContent = description;
-    generatedContactName.textContent = contact;
-    generatedContactEmail.textContent = email;
-
-    // Show the generated kit section and hide the form
-    generatedKit.classList.remove('hidden');
-    form.reset(); // Clear the form fields
+    // Display the generated media kit (this will display below the form in the browser)
+    const mediaKit = `
+        <h2>Media Kit for ${brandName}</h2>
+        <p><strong>Description:</strong> ${brandDescription}</p>
+        <p><strong>Logo:</strong> <img src="${brandLogo}" alt="${brandName} Logo" style="max-width: 100px;"></p>
+    `;
+    document.body.innerHTML += mediaKit;
 });
