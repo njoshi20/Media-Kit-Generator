@@ -4,38 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Media Kit Generator</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .media-kit {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .media-kit h2 {
+            margin-top: 0;
+        }
+
+        .media-kit img {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Media Kit Generator</h1>
         <form id="mediaKitForm">
-            <div class="form-group">
-                <label for="companyName">Company Name</label>
-                <input type="text" id="companyName" placeholder="Enter company name" required>
-            </div>
-            <div class="form-group">
-                <label for="companyDescription">Company Description</label>
-                <textarea id="companyDescription" placeholder="Enter a brief company description" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="contactName">Contact Name</label>
-                <input type="text" id="contactName" placeholder="Enter contact name" required>
-            </div>
-            <div class="form-group">
-                <label for="contactEmail">Contact Email</label>
-                <input type="email" id="contactEmail" placeholder="Enter contact email" required>
-            </div>
-            <button type="submit">Generate Media Kit</button>
-        </form>
-        <div id="generatedKit" class="hidden">
-            <h2>Generated Media Kit</h2>
-            <p><strong>Company Name:</strong> <span id="generatedCompanyName"></span></p>
-            <p><strong>Company Description:</strong> <span id="generatedCompanyDescription"></span></p>
-            <p><strong>Contact Name:</strong> <span id="generatedContactName"></span></p>
-            <p><strong>Contact Email:</strong> <span id="generatedContactEmail"></span></p>
-        </div>
+            <label for="brandName">Brand Name:</label>
+            <input type="text" id="brandName" name="brandName" required>
+
+            <label for="brandLogo">Brand Logo:</label>
+        <input type="file" id="brandLogo" name="brandLogo" accept="image/*" required>
+
+        <!-- Image preview -->
+        <img id="logoPreview" src="" alt="Logo Preview" style="max-width: 150px; margin-top: 10px; display: none;">
+
+        <!-- Submit Button -->
+        <button type="submit">Generate Media Kit</button>
+    </form>
+
+        <!-- Media Kit Output Section -->
+        <div id="mediaKitOutput" class="media-kit"></div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.getElementById("mediaKitForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents page reload on form submission
+
+            // Get values from the form fields
+            const brandName = document.getElementById("brandName").value;
+            const brandDescription = document.getElementById("brandDescription").value;
+            const brandLogo = document.getElementById("brandLogo").value;
+
+            // Create HTML content for the media kit
+            const mediaKitHTML = `
+                <h2>${brandName}</h2>
+                <p><strong>Description:</strong> ${brandDescription}</p>
+                <img src="${brandLogo}" alt="${brandName} Logo">
+            `;
+
+            // Insert the generated media kit into the page
+            document.getElementById("mediaKitOutput").innerHTML = mediaKitHTML;
+        });
+    </script>
+
 </body>
 </html>
