@@ -81,7 +81,8 @@
         <form id="mediaKitForm">
             <label for="brandName">Brand Name:</label>
             <input type="text" id="brandName" name="brandName" required>
-
+            <label for="brandDescription">Brand Description:</label>
+            <textarea id="brandDescription" name="brandDescription" rows="4" required></textarea>
             <label for="brandLogo">Brand Logo:</label>
         <input type="file" id="brandLogo" name="brandLogo" accept="image/*" required>
 
@@ -98,23 +99,29 @@
 
     <script>
         document.getElementById("mediaKitForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevents page reload on form submission
+    event.preventDefault(); // Prevents page reload on form submission
 
-            // Get values from the form fields
-            const brandName = document.getElementById("brandName").value;
-            const brandDescription = document.getElementById("brandDescription").value;
-            const brandLogo = document.getElementById("brandLogo").value;
+    // Get values from the form fields
+    const brandName = document.getElementById("brandName").value;
+    const brandDescription = document.getElementById("brandDescription").value;
+    const brandLogo = document.getElementById("brandLogo").files[0]; // Get the uploaded file
 
+    if (brandLogo) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
             // Create HTML content for the media kit
             const mediaKitHTML = `
                 <h2>${brandName}</h2>
                 <p><strong>Description:</strong> ${brandDescription}</p>
-                <img src="${brandLogo}" alt="${brandName} Logo">
+                <img src="${e.target.result}" alt="${brandName} Logo">
             `;
 
             // Insert the generated media kit into the page
             document.getElementById("mediaKitOutput").innerHTML = mediaKitHTML;
-        });
+        };
+        reader.readAsDataURL(brandLogo); // Convert image to a data URL
+    }
+});
     </script>
 
 </body>
